@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + BuildConfig.ApiKey;
+    public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + BuildConfig.ApiKey + "&language=en-US&page=1";
     public static final String TAG = "MainActivity";
 
     List<Movie> movies;
