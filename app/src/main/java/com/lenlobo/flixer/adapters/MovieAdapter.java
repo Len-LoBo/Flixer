@@ -6,22 +6,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.lenlobo.flixer.R;
+import com.lenlobo.flixer.ViewHolders.ViewHolder1;
+import com.lenlobo.flixer.ViewHolders.ViewHolder2;
 import com.lenlobo.flixer.models.Movie;
 
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
     List<Movie> movies;
+
+    private final int POPULAR = 0, UNPOPULAR = 1;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
@@ -30,18 +32,36 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("MovieAdapter", "onCreateViewHolder");
-        View movieView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
-        return new ViewHolder(movieView);
+
+        RecyclerView.ViewHolder viewHolder;
+
+        switch (viewType) {
+            case POPULAR:
+                View popularView = LayoutInflater.from(context).inflate(R.layout.item_popular_movie, parent, false);
+                viewHolder = new ViewHolder2(popularView);
+                break;
+            default:
+                View movieView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+                viewHolder = new ViewHolder1(movieView);
+        }
+
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.d("MovieAdapter", "onBindViewHolder " + position);
-        Movie movie = movies.get(position);
-        holder.bind(movie);
-
+        switch (holder.getItemViewType()) {
+            case POPULAR:
+                ViewHolder2 vh2 = (ViewHolder2) holder;
+                configureViewHolder2(vh2, position);
+                break;
+            default:
+                ViewHolder1 vh1 = (ViewHolder1) holder;
+                configureViewHolder1(vh1, position);
+        }
 
     }
 
@@ -50,40 +70,48 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView tvTitle;
-        TextView tvOverview;
-        ImageView ivPoster;
-
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvOverview = itemView.findViewById(R.id.tvOverview);
-            ivPoster = itemView.findViewById(R.id.ivPoster);
-        }
-
-        public void bind(Movie movie) {
-            tvTitle.setText(movie.getTitle());
-            tvOverview.setText(movie.getOverview());
-            int camera_placeholder;
-
-            String imageUrl;
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                imageUrl = movie.getBackdropPath();
-                camera_placeholder = R.drawable.camera_wide;
-
-            } else {
-                imageUrl = movie.getPosterPath();
-                camera_placeholder = R.drawable.camera;
-
-            }
-
-            Glide.with(context)
-                    .load(imageUrl)
-                    .placeholder(camera_placeholder)
-                    .into(ivPoster);
+    @Override
+    public int getItemViewType(int position) {
+        if (movies.get(position).getRating() > 7.0) {
+            return 0;
+        } else {
+            return 1;
         }
     }
+
+    public void configureViewHolder1(ViewHolder1 vh, int position) {
+        vh.getTvTitle().setText(movies.get(position).getTitle());
+        vh.getTvOverview().setText(movies.get(position).getOverview());
+        int camera_placeholder;
+
+        String imageUrl;
+        if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imageUrl = movies.get(position).getBackdropPath();
+            camera_placeholder = R.drawable.camera_wide;
+
+        } else {
+            imageUrl = movies.get(position).getPosterPath();
+            camera_placeholder = R.drawable.camera;
+
+        }
+
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(camera_placeholder)
+                .into(vh.getIvPoster());
+    }
+
+    public void configureViewHolder2(ViewHolder2 vh, int position) {
+
+        int camera_placeholder = R.drawable.camera_wide;
+
+        Glide.with(context)
+                .load(movies.get(position).getBackdropPath())
+                .placeholder(camera_placeholder)
+                .into(vh.getIvPoster());
+    }
 }
+
+
+
+
