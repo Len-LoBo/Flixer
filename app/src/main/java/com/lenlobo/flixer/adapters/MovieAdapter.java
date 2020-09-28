@@ -1,5 +1,6 @@
 package com.lenlobo.flixer.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +19,7 @@ import com.lenlobo.flixer.R;
 import com.lenlobo.flixer.ViewHolders.ViewHolder1;
 import com.lenlobo.flixer.ViewHolders.ViewHolder2;
 import com.lenlobo.flixer.activities.MovieDetailsActivity;
+import com.lenlobo.flixer.activities.MovieListActivity;
 import com.lenlobo.flixer.models.Movie;
 
 import org.parceler.Parcels;
@@ -109,8 +112,10 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, MovieDetailsActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) context, (View) ((Activity) context).findViewById(R.id.tvTitle), "title");
                 i.putExtra("movie", Parcels.wrap(movies.get(position)));
-                context.startActivity(i);
+                context.startActivity(i, options.toBundle());
                 //Toast.makeText(context, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
             }
 
