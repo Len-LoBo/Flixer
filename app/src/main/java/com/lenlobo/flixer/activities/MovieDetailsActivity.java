@@ -2,6 +2,7 @@ package com.lenlobo.flixer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;

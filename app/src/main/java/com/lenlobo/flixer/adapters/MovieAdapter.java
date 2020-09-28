@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -87,7 +88,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public void configureViewHolder1(ViewHolder1 vh, final int position) {
+    public void configureViewHolder1(final ViewHolder1 vh, final int position) {
         vh.getTvTitle().setText(movies.get(position).getTitle());
         vh.getTvOverview().setText(movies.get(position).getShortOverview());
         int camera_placeholder;
@@ -112,8 +113,10 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, MovieDetailsActivity.class);
+                Pair<View, String> p1 = Pair.create((View) vh.getTvTitle(), "title");
+                Pair<View, String> p2 = Pair.create((View) vh.getTvOverview(), "overview");
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) context, (View) ((Activity) context).findViewById(R.id.tvTitle), "title");
+                        makeSceneTransitionAnimation((Activity) context, p1, p2);
                 i.putExtra("movie", Parcels.wrap(movies.get(position)));
                 context.startActivity(i, options.toBundle());
                 //Toast.makeText(context, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();

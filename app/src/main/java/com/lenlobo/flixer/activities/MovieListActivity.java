@@ -49,30 +49,30 @@ public class MovieListActivity extends AppCompatActivity {
         //set layout manager on recycler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
-        for (int pageIndex = 1; pageIndex < 3; pageIndex++) {
-            MovieHttpClient.getNowPlaying(pageIndex, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.d(TAG, "onSuccess");
-                    JSONObject jsonObject = json.jsonObject;
-                    try {
-                        JSONArray results = jsonObject.getJSONArray("results");
-                        Log.i(TAG, "Results: " + results.toString());
-                        movies.addAll(Movie.fromJsonArray(results));
-                        movieAdapter.notifyDataSetChanged();
-                        Log.i(TAG, "Movies: " + movies.size());
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Json exception", e);
-                        e.printStackTrace();
-                    }
-                }
 
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.d(TAG, "onFailure");
-
+        MovieHttpClient.getNowPlaying(1, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray results = jsonObject.getJSONArray("results");
+                    Log.i(TAG, "Results: " + results.toString());
+                    movies.addAll(Movie.fromJsonArray(results));
+                    movieAdapter.notifyDataSetChanged();
+                    Log.i(TAG, "Movies: " + movies.size());
+                } catch (JSONException e) {
+                    Log.e(TAG, "Json exception", e);
+                    e.printStackTrace();
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+
+            }
+        });
+
     }
 }
