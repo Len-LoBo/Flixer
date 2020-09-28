@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.lenlobo.flixer.BuildConfig;
+import com.lenlobo.flixer.MovieHttpClient;
 import com.lenlobo.flixer.R;
 import com.lenlobo.flixer.adapters.MovieAdapter;
 import com.lenlobo.flixer.models.Movie;
@@ -28,9 +29,6 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-    public static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + BuildConfig.ApiKey + "&language=en-US&page=1";
     public static final String TAG = "MainActivity";
 
     List<Movie> movies;
@@ -52,31 +50,30 @@ public class MainActivity extends AppCompatActivity {
         //set layout manager on recycler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(NOW_PLAYING_URL, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONArray results = jsonObject.getJSONArray("results");
-                    Log.i(TAG, "Results: " + results.toString());
-                    movies.addAll(Movie.fromJsonArray(results));
-                    movieAdapter.notifyDataSetChanged();
-
-                    Log.i(TAG, "Movies: " + movies.size());
-                } catch (JSONException e) {
-                    Log.e(TAG, "Json exception", e);
-                    e.printStackTrace();
+        for (int pageIndex = 1; pageIndex < 3; pageIndex++) {
+            MovieHttpClient.getNowPlaying(pageIndex, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.d(TAG, "onSuccess");
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        JSONArray results = jsonObject.getJSONArray("results");
+                        Log.i(TAG, "Results: " + results.toString());
+                        movies.addAll(Movie.fromJsonArray(results));
+                        movieAdapter.notifyDataSetChanged();
+                        Log.i(TAG, "Movies: " + movies.size());
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Json exception", e);
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.d(TAG, "onFailure");
 
-            }
-        });
-
+                }
+            });
+        }
     }
 }
