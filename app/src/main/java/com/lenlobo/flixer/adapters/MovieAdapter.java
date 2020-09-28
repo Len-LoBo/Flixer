@@ -27,6 +27,8 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
@@ -92,6 +94,8 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         vh.getTvTitle().setText(movies.get(position).getTitle());
         vh.getTvOverview().setText(movies.get(position).getShortOverview());
         int camera_placeholder;
+        int radius = 20;
+        int margin = 0;
 
         String imageUrl;
         if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -107,6 +111,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         Glide.with(context)
                 .load(imageUrl)
                 .placeholder(camera_placeholder)
+                .transform(new RoundedCornersTransformation(radius, margin))
                 .into(vh.getIvPoster());
 
         vh.getContainer().setOnClickListener(new View.OnClickListener() {
@@ -128,10 +133,13 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void configureViewHolder2(ViewHolder2 vh, final int position) {
 
         int camera_placeholder = R.drawable.camera_wide;
+        int radius = 20;
+        int margin = 5;
 
         Glide.with(context)
                 .load(movies.get(position).getBackdropPath())
                 .placeholder(camera_placeholder)
+                .transform(new RoundedCornersTransformation(radius, margin))
                 .into(vh.getIvPoster());
 
         vh.getContainer().setOnClickListener(new View.OnClickListener() {
