@@ -1,11 +1,13 @@
 package com.lenlobo.flixer.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +16,10 @@ import com.bumptech.glide.Glide;
 import com.lenlobo.flixer.R;
 import com.lenlobo.flixer.ViewHolders.ViewHolder1;
 import com.lenlobo.flixer.ViewHolders.ViewHolder2;
+import com.lenlobo.flixer.activities.MovieDetailsActivity;
 import com.lenlobo.flixer.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -72,16 +77,16 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (movies.get(position).getRating() > 7.0) {
+        if (movies.get(position).getRating() > 7.0f) {
             return 0;
         } else {
             return 1;
         }
     }
 
-    public void configureViewHolder1(ViewHolder1 vh, int position) {
+    public void configureViewHolder1(ViewHolder1 vh, final int position) {
         vh.getTvTitle().setText(movies.get(position).getTitle());
-        vh.getTvOverview().setText(movies.get(position).getOverview());
+        vh.getTvOverview().setText(movies.get(position).getShortOverview());
         int camera_placeholder;
 
         String imageUrl;
@@ -99,9 +104,20 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .load(imageUrl)
                 .placeholder(camera_placeholder)
                 .into(vh.getIvPoster());
+
+        vh.getContainer().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, MovieDetailsActivity.class);
+                i.putExtra("movie", Parcels.wrap(movies.get(position)));
+                context.startActivity(i);
+                //Toast.makeText(context, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
-    public void configureViewHolder2(ViewHolder2 vh, int position) {
+    public void configureViewHolder2(ViewHolder2 vh, final int position) {
 
         int camera_placeholder = R.drawable.camera_wide;
 
@@ -109,6 +125,17 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .load(movies.get(position).getBackdropPath())
                 .placeholder(camera_placeholder)
                 .into(vh.getIvPoster());
+
+        vh.getContainer().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, MovieDetailsActivity.class);
+                i.putExtra("movie", Parcels.wrap(movies.get(position)));
+                context.startActivity(i);
+                //Toast.makeText(context, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 }
 

@@ -16,11 +16,16 @@ import okhttp3.Headers;
 
 public class MovieHttpClient {
 
-    private static final String NOW_PLAYING_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key="  + BuildConfig.ApiKey + "&language=en-US&page=";
+    private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
+    private static final String NOW_PLAYING_URL = BASE_URL + "now_playing?api_key="  + BuildConfig.MovieApiKey + "&language=en-US&page=";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void getNowPlaying(int pageIndex, JsonHttpResponseHandler responseHandler) {
         client.get(NOW_PLAYING_URL + pageIndex, responseHandler);
+    }
+
+    public static void getTrailer(int movieId, JsonHttpResponseHandler responseHandler) {
+        client.get(BASE_URL + movieId + "/videos?api_key=" + BuildConfig.MovieApiKey, responseHandler);
     }
 
 

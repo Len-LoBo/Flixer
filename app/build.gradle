@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
-def API_KEY = '"' + ApiKey + '"' ?: '"Api Key not found"'
+def MOVIE_API_KEY = '"' + MovieApiKey + '"' ?: '"Movie Api Key not found"'
 def STRING = 'String'
+def YOUTUBE_API_KEY = '"' + YoutubeApiKey + '"' ?: '"Youtube Api Key not found'
 
 android {
     compileSdkVersion 30
@@ -17,7 +18,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         each{type ->
-            type.buildConfigField STRING, 'ApiKey', API_KEY
+            type.buildConfigField STRING, 'MovieApiKey', MOVIE_API_KEY
+            type.buildConfigField STRING, 'YoutubeApiKey', YOUTUBE_API_KEY
         }
     }
 
@@ -34,6 +36,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -41,5 +44,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
 
 }

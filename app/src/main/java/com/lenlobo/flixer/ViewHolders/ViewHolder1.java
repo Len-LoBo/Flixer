@@ -2,6 +2,7 @@ package com.lenlobo.flixer.ViewHolders;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import com.lenlobo.flixer.R;
 
 public class ViewHolder1 extends RecyclerView.ViewHolder {
 
+    RelativeLayout container;
     TextView tvTitle;
     TextView tvOverview;
     ImageView ivPoster;
@@ -21,6 +23,7 @@ public class ViewHolder1 extends RecyclerView.ViewHolder {
         tvTitle = itemView.findViewById(R.id.tvTitle);
         tvOverview = itemView.findViewById(R.id.tvOverview);
         ivPoster = itemView.findViewById(R.id.ivPoster);
+        container = itemView.findViewById(R.id.container);
     }
 
     public TextView getTvTitle() {
@@ -45,5 +48,9 @@ public class ViewHolder1 extends RecyclerView.ViewHolder {
 
     public void setIvPoster(ImageView ivPoster) {
         this.ivPoster = ivPoster;
+    }
+
+    public RelativeLayout getContainer() {
+        return container;
     }
 }
