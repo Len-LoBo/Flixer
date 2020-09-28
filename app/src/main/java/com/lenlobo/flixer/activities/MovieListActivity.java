@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import com.codepath.asynchttpclient.AsyncHttpClient;
+
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.lenlobo.flixer.BuildConfig;
 import com.lenlobo.flixer.MovieHttpClient;
 import com.lenlobo.flixer.R;
 import com.lenlobo.flixer.adapters.MovieAdapter;
@@ -27,7 +22,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class MainActivity extends AppCompatActivity {
+public class MovieListActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
 
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movie_list);
         RecyclerView rvMovies = findViewById(R.id.rvMovies);
         movies = new ArrayList<>();
 
