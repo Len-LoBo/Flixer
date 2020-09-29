@@ -21,6 +21,7 @@ import com.lenlobo.flixer.ViewHolders.ViewHolder1;
 import com.lenlobo.flixer.ViewHolders.ViewHolder2;
 import com.lenlobo.flixer.activities.MovieDetailsActivity;
 import com.lenlobo.flixer.activities.MovieListActivity;
+import com.lenlobo.flixer.activities.TrailerActivity;
 import com.lenlobo.flixer.models.Movie;
 
 import org.parceler.Parcels;
@@ -145,7 +146,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         vh.getContainer().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, MovieDetailsActivity.class);
+                Intent i = new Intent(context, TrailerActivity.class);
                 i.putExtra("movie", Parcels.wrap(movies.get(position)));
                 context.startActivity(i);
                 //Toast.makeText(context, movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
