@@ -4,9 +4,13 @@ def MOVIE_API_KEY = '"' + MovieApiKey + '"' ?: '"Movie Api Key not found"'
 def STRING = 'String'
 def YOUTUBE_API_KEY = '"' + YoutubeApiKey + '"' ?: '"Youtube Api Key not found'
 
+apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
+
+    dataBinding.enabled = true
 
     defaultConfig {
         applicationId "com.lenlobo.flixer"

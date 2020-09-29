@@ -1,6 +1,7 @@
 package com.lenlobo.flixer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
 import android.os.Build;
@@ -18,6 +19,7 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.lenlobo.flixer.BuildConfig;
 import com.lenlobo.flixer.MovieHttpClient;
 import com.lenlobo.flixer.R;
+import com.lenlobo.flixer.databinding.ActivityMovieDetailsBinding;
 import com.lenlobo.flixer.models.Movie;
 
 import org.json.JSONArray;
@@ -29,6 +31,8 @@ import okhttp3.Headers;
 
 public class MovieDetailsActivity extends YouTubeBaseActivity {
 
+    private ActivityMovieDetailsBinding binding;
+
     TextView tvTitle;
     TextView tvOverview;
     RatingBar ratingBar;
@@ -37,14 +41,15 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
 
-        tvTitle = findViewById(R.id.tvTitle);
-        tvOverview = findViewById(R.id.tvOverview);
-        ratingBar = findViewById(R.id.ratingBar);
-        youTubePlayerView = findViewById(R.id.player);
+        tvTitle = binding.tvTitle;
+        tvOverview = binding.tvOverview;
+        ratingBar = binding.ratingBar;
+        youTubePlayerView = binding.player;
 
         Movie movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        assert movie != null;
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getFullOverview());
         ratingBar.setRating(movie.getRating());

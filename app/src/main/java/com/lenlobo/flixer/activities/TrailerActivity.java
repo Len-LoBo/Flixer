@@ -1,6 +1,7 @@
 package com.lenlobo.flixer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.google.android.youtube.player.YouTubePlayerView;
 import com.lenlobo.flixer.BuildConfig;
 import com.lenlobo.flixer.MovieHttpClient;
 import com.lenlobo.flixer.R;
+import com.lenlobo.flixer.databinding.ActivityTrailerBinding;
 import com.lenlobo.flixer.models.Movie;
 
 import org.json.JSONArray;
@@ -26,14 +28,15 @@ import okhttp3.Headers;
 
 public class TrailerActivity extends YouTubeBaseActivity {
 
+    private ActivityTrailerBinding binding;
     YouTubePlayerView youTubePlayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trailer);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_trailer);
 
-        youTubePlayerView = findViewById(R.id.player);
+        youTubePlayerView = binding.player;
 
         Movie movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 

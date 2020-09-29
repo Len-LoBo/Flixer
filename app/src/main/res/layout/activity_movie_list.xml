@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.MovieListActivity">
-
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovies"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignStart="@id/toolbar"/>
+        tools:context=".activities.MovieListActivity">
 
-</RelativeLayout>
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMovies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignStart="@id/toolbar"/>
+
+    </RelativeLayout>
+</layout>

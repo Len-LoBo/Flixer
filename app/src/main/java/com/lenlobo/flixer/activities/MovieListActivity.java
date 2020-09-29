@@ -2,6 +2,7 @@ package com.lenlobo.flixer.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.lenlobo.flixer.MovieHttpClient;
 import com.lenlobo.flixer.R;
 import com.lenlobo.flixer.adapters.MovieAdapter;
+import com.lenlobo.flixer.databinding.ActivityMovieListBinding;
 import com.lenlobo.flixer.models.Movie;
 
 import org.json.JSONArray;
@@ -26,18 +28,19 @@ import okhttp3.Headers;
 public class MovieListActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
+    private ActivityMovieListBinding binding;
 
     List<Movie> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_list);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) binding.toolbar;
         setSupportActionBar(toolbar);
 
-        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+        RecyclerView rvMovies = binding.rvMovies;
         movies = new ArrayList<>();
 
         //create adapter
