@@ -22,8 +22,6 @@ Flixer is an app that allows users to browse movies from the [The Movie Database
 
 ### App Walkthough GIF
 
-`TODO://` Add the URL to your animated app walkthough `gif` in the image tag below, `YOUR_GIF_URL_HERE`. Make sure the gif actually renders and animates when viewing this README. (🚫 Remove this paragraph after after adding gif)
-
 #### Portrait
 <img src="walkthroughs/portrait_flixer2.gif" width=250><br>
 
@@ -31,6 +29,8 @@ Flixer is an app that allows users to browse movies from the [The Movie Database
 <img src="walkthroughs/landscape_flixer2.gif" height=250><br>
 
 ### Notes
+
+ - While I was able to add data binding to remove some boilerplate code.  I have yet to figure out how to use databinding with the heterogenous recycler view, as it is a bit more complicated, and relies on multiple viewholders and bind functions.
 
 
 
