@@ -10,6 +10,11 @@ import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -35,6 +40,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
 
     TextView tvTitle;
     TextView tvOverview;
+    TextView tvReleaseDate;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
 
@@ -45,14 +51,18 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
 
         tvTitle = binding.tvTitle;
         tvOverview = binding.tvOverview;
+        tvReleaseDate = binding.tvRelease;
         ratingBar = binding.ratingBar;
         youTubePlayerView = binding.player;
+
 
         Movie movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra("movie"));
         assert movie != null;
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getFullOverview());
         ratingBar.setRating(movie.getRating());
+        tvReleaseDate.setText("Release Date: " + reformatDate(movie.getReleaseDate()));
+
 
         MovieHttpClient.getTrailer(movie.getId(), new JsonHttpResponseHandler() {
             @Override
@@ -94,5 +104,16 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
 
             }
         });
+    }
+
+    private String reformatDate(String dateString) {
+        if (dateString == "") return "N/A";
+
+        String year = dateString.substring(0, 4);
+        String month = dateString.substring(5, 7);
+        String day = dateString.substring(8,10);
+
+        return month + "/" + day + "/" + year;
+
     }
 }

@@ -18,6 +18,7 @@ public class Movie {
     String full_overview;
     float rating;
     int id;
+    String releaseDate;
 
     // empty constructor need for Parceler library
     public Movie() {}
@@ -29,13 +30,14 @@ public class Movie {
         backdropPath = jsonObject.getString("backdrop_path");
         rating = (float) jsonObject.getDouble("vote_average");
         id = jsonObject.getInt("id");
+        releaseDate = jsonObject.getString("release_date");
 
         // ensure short overview is only 150 characters max
         if (full_overview.length() > 150) short_overview = full_overview.substring(0, 150) + "...";
         else short_overview = full_overview;
     }
 
-    public Movie(String posterPath, String backdropPath, String title, String short_overview, String full_overview, float rating, int id) {
+    public Movie(String posterPath, String backdropPath, String title, String short_overview, String full_overview, float rating, int id, String releaseDate) {
         this.posterPath = posterPath;
         this.backdropPath = backdropPath;
         this.title = title;
@@ -43,6 +45,7 @@ public class Movie {
         this.full_overview = full_overview;
         this.rating = rating;
         this.id = id;
+        this.releaseDate = releaseDate;
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException {
@@ -74,6 +77,8 @@ public class Movie {
     public float getRating() {return rating;}
 
     public int getId() {return id;}
+
+    public String getReleaseDate() {return releaseDate;}
 }
 
 

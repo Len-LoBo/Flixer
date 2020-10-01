@@ -57,11 +57,23 @@
             android:rating="7.3" />
 
         <TextView
+            android:id="@+id/tvRelease"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="TextView"
+            android:textColor="#838383"
+            android:textSize="12sp"
+            tools:text="Release Date: 5/3/2020" />
+
+        <TextView
             android:id="@+id/tvOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginEnd="15dp"
             android:text="TextView"
             android:textColor="#FFFFFF"
             android:transitionName="overview"
