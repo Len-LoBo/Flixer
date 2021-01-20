@@ -1,7 +1,7 @@
 # Flixer
 Flixer is an app that allows users to browse movies from the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-### User Stories
+### User Stories / Functional Requirements
 
 - User can view a list of movies (title, poster image, and overview) currently playing in theaters from the Movie Database API.
 - Expose details of movie (ratings using RatingBar, popularity, and synopsis) in a separate activity.
